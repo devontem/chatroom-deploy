@@ -39,6 +39,6 @@ var mongoose = require('mongoose');
     this.code = shasum.digest('hex').slice(0, 5);
   });
 
-  var Link = mongoose.model('Link', db.urlSchema);
+  var Link = mongoose.model('Link', urlSchema);
 
 module.exports = Link;
