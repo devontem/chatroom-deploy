@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-
+//commit purpose
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist: {
-        src: ['./public/lib/backbone.js', './public/lib/handlebars.js', './public/lib/jquery.js', './public/lib/underscore.js'],
+        src: ['public/lib/**/*.js'],
         dest: 'dist/built.js',
       },
     },
@@ -35,7 +35,10 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      files: ['Gruntfile.js', 'test/**/*.js'
+      files: ['*.js', 'test/*.js', 
+      'public/client/*.js', 'lib/*.js', 
+      'app/*.js', 'app/**/*.js',
+
         // Add filespec list here
       ],
       options: {
@@ -130,7 +133,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     
-    'cssmin'
+    'jshint'
     
   ]);
 
