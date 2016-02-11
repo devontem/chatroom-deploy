@@ -22,7 +22,7 @@ var mongoose = require('mongoose');
 
 // }
   //add functions
-
+  var Schema = mongoose.Schema;
   var urlSchema = new Schema ({
     url: String,
     base_url: String,

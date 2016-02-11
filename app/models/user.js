@@ -26,7 +26,7 @@ var mongoose = require('mongoose');
   // });
 
   //add functions
-
+  var Schema = mongoose.Schema;
   var userSchema = new Schema({
     username : String,
     password : String,   
