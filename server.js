@@ -1,11 +1,20 @@
 var express = require('express');
 var partials = require('express-partials');
 var util = require('./lib/utility');
+var mongoose = require('mongoose');
+var env = process.env.NODE_ENV || 'development';
 
- var handler = require('./lib/request-handler');
+var handler = require('./lib/request-handler');
 
 var app = express();
 
+// Connect to datatbase
+if (env === 'production') {
+  mongoose.connect('mongodb://oosij:asdf@ds061415.mongolab.com:61415/heroku_402lncjz');
+} else {
+  mongoose.connect('mongodb://localhost/myapp');
+}
+  
 app.configure(function() {
     app.set('views', __dirname + '/views');
     app.set('view engine', 'ejs');
