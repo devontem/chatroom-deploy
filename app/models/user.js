@@ -61,6 +61,7 @@ var mongoose = require('mongoose');
   }
 
   userSchema.pre('save', function(next) {
+    console.log('hashpassword', this);
     this.hashPassword();
     next();
   })
