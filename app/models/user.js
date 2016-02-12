@@ -28,19 +28,31 @@ var mongoose = require('mongoose');
   //add functions
   var Schema = mongoose.Schema;
   var userSchema = new Schema({
-    username : String,
-    password : String,   
+    username : {
+      type: String,
+      required: true,
+      index: {
+        unique: true
+      }
+    },
+    password : {
+      type: String,
+      required: true
+    },   
   }, { 
     timestamps: true 
   });
 
-  userSchema.methods.comparePassword = function(attemptedPassword, callback) {
-    bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
+
+  var User = mongoose.model('User', userSchema);
+
+  userSchema.comparePassword = function(attemptedPassword, savedPassword, callback) {
+    bcrypt.compare(attemptedPassword, savedPassword, function(err, isMatch) {
       callback(isMatch);
       });
   }
 
-  userSchema.methods.hashPassword = function() {
+  userSchema.hashPassword = function() {
     var cipher = Promise.promisify(bcrypt.hash);
       return cipher(this.password, null, null).bind(this)
         .then(function(hash) {
@@ -53,6 +65,6 @@ var mongoose = require('mongoose');
     next();
   })
 
-var User = mongoose.model('User', userSchema);
+
 module.exports = User;
 
