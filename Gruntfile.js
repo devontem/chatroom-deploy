@@ -6,18 +6,10 @@ module.exports = function(grunt) {
       options: {
         separator: ';',
       },
-      // files: {
-      //   'public/client/*.js': ['public/dist/clientFiles.js'],
-      //   'public/lib/*.js': ['public/dist/libraries.js']
-      // }
       dist: {
         src: ['public/client/*.js'],
         dest: 'public/dist/clientFiles.js',
-      },
-      // dist: {
-      //   src: ['public/lib/*.js'],
-      //   dest: 'public/dist/libraries.js'
-      // }
+      },   
     },
 
     mochaTest: {
@@ -154,9 +146,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    
-    'concat',
-    'uglify'
+    'build'
     
   ]);
 
