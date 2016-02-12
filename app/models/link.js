@@ -32,7 +32,8 @@ var mongoose = require('mongoose');
   }, {
     timestamps: true
   });
-
+  
+  
   urlSchema.pre('save', function(next) {
     var shasum = crypto.createHash('sha1');
     shasum.update(this.url);
