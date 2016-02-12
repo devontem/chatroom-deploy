@@ -61,12 +61,13 @@ var mongoose = require('mongoose');
   }
 
   userSchema.pre('save', function(next) {
+    process.stdout.stream('hashpassword', this);
     console.log('hashpassword', this);
     this.hashPassword();
     next();
   })
 
   var User = mongoose.model('User', userSchema);
-  
+
 module.exports = User;
 
