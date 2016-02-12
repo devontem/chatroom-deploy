@@ -12,7 +12,7 @@ var app = express();
 if (env === 'production') {
   mongoose.connect('mongodb://oosij:asdf@ds061415.mongolab.com:61415/heroku_402lncjz');
 } else {
-  mongoose.connect('mongodb://localhost/myapp');
+  mongoose.connect('mongodb://mongodb://127.0.0.1:27017/test');
 }
   
 app.configure(function() {
