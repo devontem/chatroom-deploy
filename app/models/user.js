@@ -46,13 +46,13 @@ var mongoose = require('mongoose');
 
   
 
-  userSchema.comparePassword = function(attemptedPassword, savedPassword, callback) {
+  userSchema.methods.comparePassword = function(attemptedPassword, savedPassword, callback) {
     bcrypt.compare(attemptedPassword, savedPassword, function(err, isMatch) {
       callback(isMatch);
       });
   }
 
-  userSchema.hashPassword = function() {
+  userSchema.methods.hashPassword = function() {
     var cipher = Promise.promisify(bcrypt.hash);
       return cipher(this.password, null, null).bind(this)
         .then(function(hash) {
@@ -66,5 +66,6 @@ var mongoose = require('mongoose');
   })
 
   var User = mongoose.model('User', userSchema);
+  
 module.exports = User;
 
