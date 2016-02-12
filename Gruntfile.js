@@ -6,10 +6,18 @@ module.exports = function(grunt) {
       options: {
         separator: ';',
       },
+      // files: {
+      //   'public/client/*.js': ['public/dist/clientFiles.js'],
+      //   'public/lib/*.js': ['public/dist/libraries.js']
+      // }
       dist: {
-        src: ['public/lib/**/*.js'],
-        dest: 'dist/built.js',
+        src: ['public/client/*.js'],
+        dest: 'public/dist/clientFiles.js',
       },
+      // dist: {
+      //   src: ['public/lib/*.js'],
+      //   dest: 'public/dist/libraries.js'
+      // }
     },
 
     mochaTest: {
@@ -29,8 +37,8 @@ module.exports = function(grunt) {
 
     uglify: {
       build: {
-        src: 'dist/built.js',
-        dest: 'dist/built.min.js'
+        src: 'public/dist/clientFiles.js',
+        dest: 'public/dist/clientFiles.min.js'
       }
     },
 
@@ -57,7 +65,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'public',
           src: ['*.css', '!*.min.css'],
-          dest: 'dist/css',
+          dest: 'public/dist/css',
           ext: '.min.css'
         }]
       }
@@ -82,6 +90,12 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push heroku master',
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
     },
   });
@@ -113,15 +127,20 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'jshint',
     'mochaTest'
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'uglify',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run(['shell:prodServer']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -129,11 +148,15 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'test',
+    'build',
+    'upload'
   ]);
 
   grunt.registerTask('default', [
     
-    'jshint'
+    'concat',
+    'uglify'
     
   ]);
 
